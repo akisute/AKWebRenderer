@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  TwitterPicturesViewController.h
 //  TwitterClient
 //
 //  Created by 小野 将司 on 2013/11/02.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+@interface TwitterPicturesViewController : UICollectionViewController
 
 @end

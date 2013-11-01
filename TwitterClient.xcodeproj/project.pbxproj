@@ -14,13 +14,13 @@
 		0E6437F91824227A005CE668 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E6437F81824227A005CE668 /* main.m */; };
 		0E6437FD1824227A005CE668 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E6437FC1824227A005CE668 /* AppDelegate.m */; };
 		0E6438001824227A005CE668 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E6437FE1824227A005CE668 /* Main.storyboard */; };
-		0E6438031824227A005CE668 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E6438021824227A005CE668 /* ViewController.m */; };
 		0E6438051824227A005CE668 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E6438041824227A005CE668 /* Images.xcassets */; };
 		0E64380C1824227A005CE668 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E64380B1824227A005CE668 /* XCTest.framework */; };
 		0E64380D1824227A005CE668 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E6437EC1824227A005CE668 /* Foundation.framework */; };
 		0E64380E1824227A005CE668 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E6437F01824227A005CE668 /* UIKit.framework */; };
 		0E6438161824227A005CE668 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0E6438141824227A005CE668 /* InfoPlist.strings */; };
 		0E6438181824227A005CE668 /* TwitterClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E6438171824227A005CE668 /* TwitterClientTests.m */; };
+		0E643823182424B2005CE668 /* TwitterPicturesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E643822182424B2005CE668 /* TwitterPicturesViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,14 +45,14 @@
 		0E6437FB1824227A005CE668 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		0E6437FC1824227A005CE668 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		0E6437FF1824227A005CE668 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		0E6438011824227A005CE668 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		0E6438021824227A005CE668 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		0E6438041824227A005CE668 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		0E64380A1824227A005CE668 /* TwitterClientTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TwitterClientTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E64380B1824227A005CE668 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		0E6438131824227A005CE668 /* TwitterClientTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TwitterClientTests-Info.plist"; sourceTree = "<group>"; };
 		0E6438151824227A005CE668 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		0E6438171824227A005CE668 /* TwitterClientTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TwitterClientTests.m; sourceTree = "<group>"; };
+		0E643821182424B2005CE668 /* TwitterPicturesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterPicturesViewController.h; sourceTree = "<group>"; };
+		0E643822182424B2005CE668 /* TwitterPicturesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwitterPicturesViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,8 +115,8 @@
 				0E6437FB1824227A005CE668 /* AppDelegate.h */,
 				0E6437FC1824227A005CE668 /* AppDelegate.m */,
 				0E6437FE1824227A005CE668 /* Main.storyboard */,
-				0E6438011824227A005CE668 /* ViewController.h */,
-				0E6438021824227A005CE668 /* ViewController.m */,
+				0E643821182424B2005CE668 /* TwitterPicturesViewController.h */,
+				0E643822182424B2005CE668 /* TwitterPicturesViewController.m */,
 				0E6438041824227A005CE668 /* Images.xcassets */,
 				0E6437F31824227A005CE668 /* Supporting Files */,
 			);
@@ -249,9 +249,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0E6438031824227A005CE668 /* ViewController.m in Sources */,
 				0E6437FD1824227A005CE668 /* AppDelegate.m in Sources */,
 				0E6437F91824227A005CE668 /* main.m in Sources */,
+				0E643823182424B2005CE668 /* TwitterPicturesViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
