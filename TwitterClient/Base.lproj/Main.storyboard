@@ -15,18 +15,30 @@
                             <size key="itemSize" width="50" height="50"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <inset key="sectionInset" minX="10" minY="10" maxX="10" maxY="10"/>
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="k25-oS-KZr">
-                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                <rect key="frame" x="10" y="10" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Rock-T" translatesAutoresizingMaskIntoConstraints="NO" id="HhL-ee-oVH">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        </imageView>
+                                    </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="HhL-ee-oVH" firstAttribute="top" secondItem="k25-oS-KZr" secondAttribute="top" id="7Oq-xa-b8C"/>
+                                    <constraint firstItem="HhL-ee-oVH" firstAttribute="leading" secondItem="k25-oS-KZr" secondAttribute="leading" id="jLH-V0-lco"/>
+                                    <constraint firstAttribute="trailing" secondItem="HhL-ee-oVH" secondAttribute="trailing" id="uD2-9F-Ggh"/>
+                                    <constraint firstAttribute="bottom" secondItem="HhL-ee-oVH" secondAttribute="bottom" id="wT8-dS-IQI"/>
+                                </constraints>
                             </collectionViewCell>
                         </cells>
                         <connections>
@@ -40,6 +52,9 @@
             <point key="canvasLocation" x="311" y="157"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Rock-T" width="64" height="64"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
