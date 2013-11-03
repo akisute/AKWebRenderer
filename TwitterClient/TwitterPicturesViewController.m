@@ -7,6 +7,7 @@
 //
 
 #import "TwitterPicturesViewController.h"
+#import "PictureDetailViewController.h"
 
 @interface TwitterPicturesViewController ()
 
@@ -59,6 +60,21 @@
     UICollectionReusableView *view = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:viewIdentifier forIndexPath:indexPath];
     
     return view;
+}
+
+#pragma mark - IBAction
+
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@""]) {
+        PictureDetailViewController *pictureDetailViewController = (PictureDetailViewController *)segue.destinationViewController;
+        pictureDetailViewController.pictureImageView.image = nil;
+    }
+}
+
+- (IBAction)dismissPictureDetailViewController:(UIStoryboardSegue *)segue
+{
 }
 
 

@@ -39,6 +39,9 @@
                                     <constraint firstAttribute="trailing" secondItem="HhL-ee-oVH" secondAttribute="trailing" id="uD2-9F-Ggh"/>
                                     <constraint firstAttribute="bottom" secondItem="HhL-ee-oVH" secondAttribute="bottom" id="wT8-dS-IQI"/>
                                 </constraints>
+                                <connections>
+                                    <segue destination="CW8-96-xyf" kind="modal" identifier="PictureDetailViewController" id="7Jh-7k-NRo"/>
+                                </connections>
                             </collectionViewCell>
                         </cells>
                         <connections>
@@ -50,6 +53,57 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ei4-ss-yYr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="311" y="157"/>
+        </scene>
+        <!--Picture Detail View Controller-->
+        <scene sceneID="KLD-e9-GcE">
+            <objects>
+                <viewController id="CW8-96-xyf" customClass="PictureDetailViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="82G-6H-trL"/>
+                        <viewControllerLayoutGuide type="bottom" id="6eb-br-pD4"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="BnF-wy-UaQ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ugy-JD-Pld">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ie3-nc-Px8">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        <gestureRecognizers/>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="vKB-jB-v4j" appends="YES" id="Dxy-dm-x6O"/>
+                                        </connections>
+                                    </imageView>
+                                </subviews>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Ugy-JD-Pld" firstAttribute="top" secondItem="BnF-wy-UaQ" secondAttribute="top" id="WyP-jT-Roe"/>
+                            <constraint firstItem="Ugy-JD-Pld" firstAttribute="leading" secondItem="BnF-wy-UaQ" secondAttribute="leading" id="ZpA-mB-JUI"/>
+                            <constraint firstItem="6eb-br-pD4" firstAttribute="top" secondItem="Ugy-JD-Pld" secondAttribute="bottom" id="hky-bb-BhF"/>
+                            <constraint firstAttribute="trailing" secondItem="Ugy-JD-Pld" secondAttribute="trailing" id="xCq-5s-Zo9"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="kX2-om-aO1"/>
+                    <connections>
+                        <outlet property="pictureImageView" destination="ie3-nc-Px8" id="ZhL-XC-xes"/>
+                        <outlet property="scrollView" destination="Ugy-JD-Pld" id="c1y-BT-vpz"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="J5C-Ko-Wc9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="vKB-jB-v4j">
+                    <connections>
+                        <segue destination="EX3-aa-16n" kind="unwind" unwindAction="dismissPictureDetailViewController:" id="yrj-T9-tT3"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <exit id="EX3-aa-16n" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="933" y="157"/>
         </scene>
     </scenes>
     <resources>
