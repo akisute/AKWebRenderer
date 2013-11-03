@@ -7,6 +7,7 @@
 //
 
 #import "TwitterPicturesViewController.h"
+#import "TwitterPicturesViewCell.h"
 #import "PictureDetailViewController.h"
 
 @interface TwitterPicturesViewController ()
@@ -67,9 +68,10 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier isEqualToString:@""]) {
+    TwitterPicturesViewCell *cell = sender;
+    if ([segue.identifier isEqualToString:@"PictureDetailViewController"]) {
         PictureDetailViewController *pictureDetailViewController = (PictureDetailViewController *)segue.destinationViewController;
-        pictureDetailViewController.pictureImageView.image = nil;
+        pictureDetailViewController.picture = cell.imageView.image;
     }
 }
 

@@ -18,7 +18,7 @@
                             <inset key="sectionInset" minX="10" minY="10" maxX="10" maxY="10"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="k25-oS-KZr">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="k25-oS-KZr" customClass="TwitterPicturesViewCell">
                                 <rect key="frame" x="10" y="10" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -40,6 +40,7 @@
                                     <constraint firstAttribute="bottom" secondItem="HhL-ee-oVH" secondAttribute="bottom" id="wT8-dS-IQI"/>
                                 </constraints>
                                 <connections>
+                                    <outlet property="imageView" destination="HhL-ee-oVH" id="Sud-ku-De3"/>
                                     <segue destination="CW8-96-xyf" kind="modal" identifier="PictureDetailViewController" id="7Jh-7k-NRo"/>
                                 </connections>
                             </collectionViewCell>
