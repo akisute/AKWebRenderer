@@ -7,8 +7,12 @@
 //
 
 #import "TwitterPicturesViewController.h"
+
 #import "TwitterPicturesViewCell.h"
 #import "PictureDetailViewController.h"
+
+#import "TwitterAPIManager.h"
+#import "MTweets.h"
 
 @interface TwitterPicturesViewController ()
 
@@ -16,14 +20,9 @@
 
 @implementation TwitterPicturesViewController
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    if ([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)]) {
-        [self setNeedsStatusBarAppearanceUpdate];
-    }
-}
+
+#pragma mark - UIViewController
+
 
 - (BOOL)prefersStatusBarHidden
 {
@@ -35,6 +34,32 @@
     return UIStatusBarStyleLightContent;
 }
 
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    if ([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)]) {
+        [self setNeedsStatusBarAppearanceUpdate];
+    }
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [[TwitterAPIManager sharedManager] GET:@"" params:nil completionHandler:^(id jsonObject, NSURLResponse *response, NSError *error) {
+        NSArray *tweetObjects = jsonObject;
+        for (NSDictionary *tweetObject in tweetObjects) {
+            MTweets *tweet = [[MTweets alloc] initWithJSONObject:tweetObject];
+            [MTweets insertNewObject:tweet];
+        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.collectionView reloadData];
+        });
+    }];
+}
+
+
 #pragma mark - UICollectionViewDataSource
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
@@ -44,7 +69,7 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 100;
+    return [MTweets count];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath

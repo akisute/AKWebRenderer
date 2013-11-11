@@ -23,6 +23,14 @@
 		0E6438161824227A005CE668 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0E6438141824227A005CE668 /* InfoPlist.strings */; };
 		0E6438181824227A005CE668 /* TwitterClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E6438171824227A005CE668 /* TwitterClientTests.m */; };
 		0E643823182424B2005CE668 /* TwitterPicturesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E643822182424B2005CE668 /* TwitterPicturesViewController.m */; };
+		0E743D801828A01F0017F3D5 /* MTweets.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E743D7F1828A01F0017F3D5 /* MTweets.m */; };
+		0E743D811828A01F0017F3D5 /* MTweets.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E743D7F1828A01F0017F3D5 /* MTweets.m */; };
+		0E743D841828A1ED0017F3D5 /* TwitterAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E743D831828A1ED0017F3D5 /* TwitterAPIManager.m */; };
+		0E743D851828A1ED0017F3D5 /* TwitterAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E743D831828A1ED0017F3D5 /* TwitterAPIManager.m */; };
+		0E743D871828B8900017F3D5 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E743D861828B8900017F3D5 /* Social.framework */; };
+		0E743D891828B8960017F3D5 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E743D881828B8960017F3D5 /* Accounts.framework */; };
+		0E743D8A1828B8AF0017F3D5 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E743D881828B8960017F3D5 /* Accounts.framework */; };
+		0E743D8B1828B8AF0017F3D5 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E743D861828B8900017F3D5 /* Social.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +67,12 @@
 		0E6438171824227A005CE668 /* TwitterClientTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TwitterClientTests.m; sourceTree = "<group>"; };
 		0E643821182424B2005CE668 /* TwitterPicturesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterPicturesViewController.h; sourceTree = "<group>"; };
 		0E643822182424B2005CE668 /* TwitterPicturesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwitterPicturesViewController.m; sourceTree = "<group>"; };
+		0E743D7E1828A01F0017F3D5 /* MTweets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTweets.h; sourceTree = "<group>"; };
+		0E743D7F1828A01F0017F3D5 /* MTweets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTweets.m; sourceTree = "<group>"; };
+		0E743D821828A1ED0017F3D5 /* TwitterAPIManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterAPIManager.h; sourceTree = "<group>"; };
+		0E743D831828A1ED0017F3D5 /* TwitterAPIManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwitterAPIManager.m; sourceTree = "<group>"; };
+		0E743D861828B8900017F3D5 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		0E743D881828B8960017F3D5 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +80,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E743D891828B8960017F3D5 /* Accounts.framework in Frameworks */,
+				0E743D871828B8900017F3D5 /* Social.framework in Frameworks */,
 				0E6437EF1824227A005CE668 /* CoreGraphics.framework in Frameworks */,
 				0E6437F11824227A005CE668 /* UIKit.framework in Frameworks */,
 				0E6437ED1824227A005CE668 /* Foundation.framework in Frameworks */,
@@ -77,7 +93,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				0E64380C1824227A005CE668 /* XCTest.framework in Frameworks */,
+				0E743D8B1828B8AF0017F3D5 /* Social.framework in Frameworks */,
 				0E64380E1824227A005CE668 /* UIKit.framework in Frameworks */,
+				0E743D8A1828B8AF0017F3D5 /* Accounts.framework in Frameworks */,
 				0E64380D1824227A005CE668 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -107,6 +125,8 @@
 		0E6437EB1824227A005CE668 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0E743D881828B8960017F3D5 /* Accounts.framework */,
+				0E743D861828B8900017F3D5 /* Social.framework */,
 				0E6437EC1824227A005CE668 /* Foundation.framework */,
 				0E6437EE1824227A005CE668 /* CoreGraphics.framework */,
 				0E6437F01824227A005CE668 /* UIKit.framework */,
@@ -127,6 +147,10 @@
 				0E127A81182618D700132E1E /* TwitterPicturesViewCell.m */,
 				0E127A7D1826081100132E1E /* PictureDetailViewController.h */,
 				0E127A7E1826081100132E1E /* PictureDetailViewController.m */,
+				0E743D821828A1ED0017F3D5 /* TwitterAPIManager.h */,
+				0E743D831828A1ED0017F3D5 /* TwitterAPIManager.m */,
+				0E743D7E1828A01F0017F3D5 /* MTweets.h */,
+				0E743D7F1828A01F0017F3D5 /* MTweets.m */,
 				0E6438041824227A005CE668 /* Images.xcassets */,
 				0E6437F31824227A005CE668 /* Supporting Files */,
 			);
@@ -260,6 +284,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				0E6437FD1824227A005CE668 /* AppDelegate.m in Sources */,
+				0E743D801828A01F0017F3D5 /* MTweets.m in Sources */,
+				0E743D841828A1ED0017F3D5 /* TwitterAPIManager.m in Sources */,
 				0E127A82182618D700132E1E /* TwitterPicturesViewCell.m in Sources */,
 				0E6437F91824227A005CE668 /* main.m in Sources */,
 				0E127A7F1826081100132E1E /* PictureDetailViewController.m in Sources */,
@@ -272,6 +298,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				0E6438181824227A005CE668 /* TwitterClientTests.m in Sources */,
+				0E743D851828A1ED0017F3D5 /* TwitterAPIManager.m in Sources */,
+				0E743D811828A01F0017F3D5 /* MTweets.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
