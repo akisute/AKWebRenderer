@@ -11,6 +11,7 @@
 #import "TwitterPicturesViewTextCell.h"
 #import "TwitterPicturesViewWebCell.h"
 #import "TwitterPicturesViewImageCell.h"
+#import "WebViewController.h"
 #import "PictureDetailViewController.h"
 
 #import "TwitterAPIManager.h"
@@ -79,6 +80,7 @@
     NSArray *allTweets = [MTweets allObjects];
     MTweets *tweet = allTweets[indexPath.row];
     if (tweet.retweetedStatus) {
+        // TODO: should indicate in UI that this tweet is "retweeted" in some way
         tweet = tweet.retweetedStatus;
     }
     
@@ -119,14 +121,23 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    TwitterPicturesViewImageCell *cell = sender;
-    if ([segue.identifier isEqualToString:@"PictureDetailViewController"]) {
+    if ([segue.identifier isEqualToString:NSStringFromClass([PictureDetailViewController class])]) {
+        TwitterPicturesViewImageCell *cell = sender;
         PictureDetailViewController *pictureDetailViewController = (PictureDetailViewController *)segue.destinationViewController;
         pictureDetailViewController.picture = cell.imageView.image;
+    } else if ([segue.identifier isEqualToString:NSStringFromClass([WebViewController class])]) {
+        TwitterPicturesViewWebCell *cell = sender;
+        UINavigationController *navigationController = (UINavigationController *)segue.destinationViewController;
+        WebViewController *webViewController = (WebViewController *)navigationController.viewControllers.firstObject;
+        webViewController.url = [NSURL URLWithString:cell.URLLabel.text];
     }
 }
 
 - (IBAction)dismissPictureDetailViewController:(UIStoryboardSegue *)segue
+{
+}
+
+- (IBAction)dismissWebViewController:(UIStoryboardSegue *)segue
 {
 }
 

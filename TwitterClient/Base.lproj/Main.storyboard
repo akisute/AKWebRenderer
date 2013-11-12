@@ -72,6 +72,7 @@
                                 </constraints>
                                 <connections>
                                     <outlet property="URLLabel" destination="5aJ-t3-0lk" id="Y00-st-3xi"/>
+                                    <segue destination="exT-jI-Vdi" kind="modal" identifier="WebViewController" id="E8h-Wb-ya3"/>
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TwitterPicturesViewImageCell" id="k25-oS-KZr" customClass="TwitterPicturesViewImageCell">
@@ -161,6 +162,68 @@
                 <exit id="EX3-aa-16n" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="933" y="157"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="aME-00-pur">
+            <objects>
+                <navigationController definesPresentationContext="YES" id="exT-jI-Vdi" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="DUo-eg-maf">
+                        <rect key="frame" x="0.0" y="0.0" width="0.0" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="in1-6K-PL5" kind="relationship" relationship="rootViewController" id="70f-lr-KdY"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5Go-yx-1qc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="933" y="881"/>
+        </scene>
+        <!--Web View Controller-->
+        <scene sceneID="mFL-6u-Q2E">
+            <objects>
+                <viewController id="in1-6K-PL5" customClass="WebViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="wC5-rx-xMa"/>
+                        <viewControllerLayoutGuide type="bottom" id="dcf-Al-nON"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="q1b-nU-ovj">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JZy-L6-0XJ">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES" calendarEvent="YES"/>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="JZy-L6-0XJ" firstAttribute="leading" secondItem="q1b-nU-ovj" secondAttribute="leading" id="bAS-xG-Uvy"/>
+                            <constraint firstItem="JZy-L6-0XJ" firstAttribute="top" secondItem="wC5-rx-xMa" secondAttribute="bottom" id="liG-nq-cZ1"/>
+                            <constraint firstAttribute="trailing" secondItem="JZy-L6-0XJ" secondAttribute="trailing" id="rGe-Co-cch"/>
+                            <constraint firstAttribute="bottom" secondItem="JZy-L6-0XJ" secondAttribute="bottom" id="uIa-Ev-aXP"/>
+                        </constraints>
+                    </view>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="rhW-Xi-Kpi">
+                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="7fd-96-Ktp">
+                            <connections>
+                                <segue destination="vtv-nT-32h" kind="unwind" unwindAction="dismissWebViewController:" id="8Hl-cL-MKm"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="rd7-7q-bGm"/>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="webView" destination="JZy-L6-0XJ" id="XZB-d4-Vhd"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="s0I-rc-NAz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="vtv-nT-32h" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="1427" y="881"/>
         </scene>
     </scenes>
     <resources>

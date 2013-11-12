@@ -11,5 +11,6 @@
 @interface TwitterPicturesViewController : UICollectionViewController
 
 - (IBAction)dismissPictureDetailViewController:(UIStoryboardSegue *)segue;
+- (IBAction)dismissWebViewController:(UIStoryboardSegue *)segue;
 
 @end

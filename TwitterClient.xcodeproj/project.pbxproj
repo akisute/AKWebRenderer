@@ -33,6 +33,7 @@
 		0E743D8B1828B8AF0017F3D5 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E743D861828B8900017F3D5 /* Social.framework */; };
 		0E904CD218323AAB00A357D5 /* TwitterPicturesViewTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E904CD118323AAB00A357D5 /* TwitterPicturesViewTextCell.m */; };
 		0E904CD518323ABC00A357D5 /* TwitterPicturesViewWebCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E904CD418323ABC00A357D5 /* TwitterPicturesViewWebCell.m */; };
+		0E904CD818324E6D00A357D5 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E904CD718324E6D00A357D5 /* WebViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +80,8 @@
 		0E904CD118323AAB00A357D5 /* TwitterPicturesViewTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwitterPicturesViewTextCell.m; sourceTree = "<group>"; };
 		0E904CD318323ABC00A357D5 /* TwitterPicturesViewWebCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterPicturesViewWebCell.h; sourceTree = "<group>"; };
 		0E904CD418323ABC00A357D5 /* TwitterPicturesViewWebCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwitterPicturesViewWebCell.m; sourceTree = "<group>"; };
+		0E904CD618324E6D00A357D5 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
+		0E904CD718324E6D00A357D5 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,6 +158,8 @@
 				0E904CD418323ABC00A357D5 /* TwitterPicturesViewWebCell.m */,
 				0E904CD018323AAB00A357D5 /* TwitterPicturesViewTextCell.h */,
 				0E904CD118323AAB00A357D5 /* TwitterPicturesViewTextCell.m */,
+				0E904CD618324E6D00A357D5 /* WebViewController.h */,
+				0E904CD718324E6D00A357D5 /* WebViewController.m */,
 				0E127A7D1826081100132E1E /* PictureDetailViewController.h */,
 				0E127A7E1826081100132E1E /* PictureDetailViewController.m */,
 				0E743D821828A1ED0017F3D5 /* TwitterAPIManager.h */,
@@ -294,6 +299,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0E6437FD1824227A005CE668 /* AppDelegate.m in Sources */,
+				0E904CD818324E6D00A357D5 /* WebViewController.m in Sources */,
 				0E743D801828A01F0017F3D5 /* MTweets.m in Sources */,
 				0E904CD218323AAB00A357D5 /* TwitterPicturesViewTextCell.m in Sources */,
 				0E743D841828A1ED0017F3D5 /* TwitterAPIManager.m in Sources */,
