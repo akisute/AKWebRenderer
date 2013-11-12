@@ -8,6 +8,8 @@
 
 #import "TwitterPicturesViewController.h"
 
+#import "TwitterPicturesViewTextCell.h"
+#import "TwitterPicturesViewWebCell.h"
 #import "TwitterPicturesViewImageCell.h"
 #import "PictureDetailViewController.h"
 
@@ -74,9 +76,31 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([TwitterPicturesViewImageCell class]) forIndexPath:indexPath];
+    NSArray *allTweets = [MTweets allObjects];
+    MTweets *tweet = allTweets[indexPath.row];
     
-    return cell;
+    switch (tweet.tweetType) {
+        case MTWeetsTypeText:
+        {
+            TwitterPicturesViewTextCell *cell = (TwitterPicturesViewTextCell *)[collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([TwitterPicturesViewTextCell class]) forIndexPath:indexPath];
+            cell.textView.text = tweet.text;
+            return cell;
+        }
+        case MTWeetsTypeWeb:
+        {
+            TwitterPicturesViewWebCell *cell = (TwitterPicturesViewWebCell *)[collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([TwitterPicturesViewWebCell class]) forIndexPath:indexPath];
+            cell.URLLabel.text = [tweet.urls.firstObject description];
+            return cell;
+        }
+        case MTWeetsTypeImage:
+        {
+            TwitterPicturesViewImageCell *cell = (TwitterPicturesViewImageCell *)[collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([TwitterPicturesViewImageCell class]) forIndexPath:indexPath];
+            // TODO: load image with URL
+            return cell;
+        }
+        default:
+            return nil;
+    }
 }
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
