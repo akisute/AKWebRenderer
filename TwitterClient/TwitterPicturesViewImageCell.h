@@ -1,5 +1,5 @@
 //
-//  TwitterPicturesViewCell.h
+//  TwitterPicturesViewImageCell.h
 //  TwitterClient
 //
 //  Created by 小野 将司 on 2013/11/03.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TwitterPicturesViewCell : UICollectionViewCell
+@interface TwitterPicturesViewImageCell : UICollectionViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 

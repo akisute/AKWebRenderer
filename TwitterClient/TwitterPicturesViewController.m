@@ -8,7 +8,7 @@
 
 #import "TwitterPicturesViewController.h"
 
-#import "TwitterPicturesViewCell.h"
+#import "TwitterPicturesViewImageCell.h"
 #import "PictureDetailViewController.h"
 
 #import "TwitterAPIManager.h"
@@ -74,8 +74,7 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *cellIdentifier = @"Cell";
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
+    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([TwitterPicturesViewImageCell class]) forIndexPath:indexPath];
     
     return cell;
 }
@@ -93,7 +92,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    TwitterPicturesViewCell *cell = sender;
+    TwitterPicturesViewImageCell *cell = sender;
     if ([segue.identifier isEqualToString:@"PictureDetailViewController"]) {
         PictureDetailViewController *pictureDetailViewController = (PictureDetailViewController *)segue.destinationViewController;
         pictureDetailViewController.picture = cell.imageView.image;
