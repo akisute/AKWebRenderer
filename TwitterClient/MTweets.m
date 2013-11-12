@@ -82,6 +82,12 @@ static NSMutableSet *objectIDs;
             [urlBuffer addObject:url];
         }
         self.urls = [NSArray arrayWithArray:urlBuffer];
+        
+        NSDictionary *retweetedStatusObject = jsonObject[@"retweeted_status"];
+        if (retweetedStatusObject) {
+            MTweets *retweetedStatus = [[MTweets alloc] initWithJSONObject:retweetedStatusObject];
+            self.retweetedStatus = retweetedStatus;
+        }
     }
     return self;
 }

@@ -78,6 +78,9 @@
 {
     NSArray *allTweets = [MTweets allObjects];
     MTweets *tweet = allTweets[indexPath.row];
+    if (tweet.retweetedStatus) {
+        tweet = tweet.retweetedStatus;
+    }
     
     switch (tweet.tweetType) {
         case MTWeetsTypeText:
