@@ -41,6 +41,10 @@
 {
     [super viewDidLoad];
     
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
+    [self.collectionView addSubview:refreshControl];
+    
     if ([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)]) {
         [self setNeedsStatusBarAppearanceUpdate];
     }
@@ -50,16 +54,7 @@
 {
     [super viewWillAppear:animated];
     
-    [[TwitterAPIManager sharedManager] GET:@"" params:nil completionHandler:^(id jsonObject, NSURLResponse *response, NSError *error) {
-        NSArray *tweetObjects = jsonObject;
-        for (NSDictionary *tweetObject in tweetObjects) {
-            MTweets *tweet = [[MTweets alloc] initWithJSONObject:tweetObject];
-            [MTweets insertNewObject:tweet];
-        }
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.collectionView reloadData];
-        });
-    }];
+    [self refresh:nil];
 }
 
 
@@ -119,6 +114,28 @@
 
 #pragma mark - IBAction
 
+
+- (IBAction)refresh:(id)sender
+{
+    UIRefreshControl *refreshControl = nil;
+    if (sender) {
+        refreshControl = sender;
+    }
+    
+    [[TwitterAPIManager sharedManager] GET:@"" params:nil completionHandler:^(id jsonObject, NSURLResponse *response, NSError *error) {
+        NSArray *tweetObjects = jsonObject;
+        for (NSDictionary *tweetObject in tweetObjects) {
+            MTweets *tweet = [[MTweets alloc] initWithJSONObject:tweetObject];
+            [MTweets insertNewObject:tweet];
+        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.collectionView reloadData];
+            if (refreshControl) {
+                [refreshControl endRefreshing];
+            }
+        });
+    }];
+}
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {

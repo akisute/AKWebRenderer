@@ -10,6 +10,7 @@
 
 @interface TwitterPicturesViewController : UICollectionViewController
 
+- (IBAction)refresh:(id)sender;
 - (IBAction)dismissPictureDetailViewController:(UIStoryboardSegue *)segue;
 - (IBAction)dismissWebViewController:(UIStoryboardSegue *)segue;
 
