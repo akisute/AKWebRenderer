@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MTweetURLObject.h"
 
 typedef enum MTWeetsType_ {
     MTWeetsTypeUnknown = 0,
@@ -28,8 +29,8 @@ typedef enum MTWeetsType_ {
 @property (nonatomic, copy) NSString *userScreenName;
 @property (nonatomic, copy) NSString *username;
 @property (nonatomic, copy) NSString *text;
-@property (nonatomic) NSArray *urls;                // list of NSURL objects TODO: should create MTweetURLObject instead of using direct NSURL
-@property (nonatomic) MTweets *retweetedStatus;     // Original Tweet Object, which is retweeted by this tweet. Does not nest.
+@property (nonatomic) NSArray *urls;                // List of MTweetURLObject
+@property (nonatomic) MTweets *retweetedStatus;     // Original MTweets Object, which is retweeted by this tweet. Does not nest.
 
 @property (nonatomic, readonly) MTWeetsType tweetType;
 

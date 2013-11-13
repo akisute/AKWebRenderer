@@ -10,5 +10,10 @@
 
 @implementation TwitterPicturesViewTextCell
 
+- (void)onTweetUpdated
+{
+    [super onTweetUpdated];
+    self.textView.text = self.tweet.text;
+}
 
 @end

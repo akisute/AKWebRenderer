@@ -10,4 +10,10 @@
 
 @implementation TwitterPicturesViewImageCell
 
+- (void)onTweetUpdated
+{
+    [super onTweetUpdated];
+    // TODO: Grab Image and put it in
+}
+
 @end

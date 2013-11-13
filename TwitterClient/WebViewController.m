@@ -18,9 +18,12 @@
 {
     [super viewWillAppear:animated];
     
-    if (self.url) {
-        NSURLRequest *request = [NSURLRequest requestWithURL:self.url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:20.0f];
-        [self.webView loadRequest:request];
+    if (self.tweet) {
+        MTweetURLObject *urlObject = self.tweet.urls.firstObject;
+        if (urlObject.url) {
+            NSURLRequest *request = [NSURLRequest requestWithURL:urlObject.url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:20.0f];
+            [self.webView loadRequest:request];
+        }
     }
 }
 

@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TwitterPicturesViewCell.h"
 
-@interface TwitterPicturesViewWebCell : UICollectionViewCell
+@interface TwitterPicturesViewWebCell : TwitterPicturesViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *URLLabel;
 

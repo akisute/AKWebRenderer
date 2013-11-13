@@ -10,5 +10,11 @@
 
 @implementation TwitterPicturesViewWebCell
 
+- (void)onTweetUpdated
+{
+    [super onTweetUpdated];
+    MTweetURLObject *urlObject = self.tweet.urls.firstObject;
+    self.URLLabel.text = urlObject.displayURLString;
+}
 
 @end

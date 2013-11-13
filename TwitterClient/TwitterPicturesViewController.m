@@ -65,6 +65,7 @@
 
 #pragma mark - UICollectionViewDataSource
 
+
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
     return 1;
@@ -88,19 +89,19 @@
         case MTWeetsTypeText:
         {
             TwitterPicturesViewTextCell *cell = (TwitterPicturesViewTextCell *)[collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([TwitterPicturesViewTextCell class]) forIndexPath:indexPath];
-            cell.textView.text = tweet.text;
+            cell.tweet = tweet;
             return cell;
         }
         case MTWeetsTypeWeb:
         {
             TwitterPicturesViewWebCell *cell = (TwitterPicturesViewWebCell *)[collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([TwitterPicturesViewWebCell class]) forIndexPath:indexPath];
-            cell.URLLabel.text = [tweet.urls.firstObject description];
+            cell.tweet = tweet;
             return cell;
         }
         case MTWeetsTypeImage:
         {
             TwitterPicturesViewImageCell *cell = (TwitterPicturesViewImageCell *)[collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([TwitterPicturesViewImageCell class]) forIndexPath:indexPath];
-            // TODO: load image with URL
+            cell.tweet = tweet;
             return cell;
         }
         default:
@@ -129,7 +130,7 @@
         TwitterPicturesViewWebCell *cell = sender;
         UINavigationController *navigationController = (UINavigationController *)segue.destinationViewController;
         WebViewController *webViewController = (WebViewController *)navigationController.viewControllers.firstObject;
-        webViewController.url = [NSURL URLWithString:cell.URLLabel.text];
+        webViewController.tweet = cell.tweet;
     }
 }
 

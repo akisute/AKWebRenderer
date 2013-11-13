@@ -16,9 +16,9 @@ static NSMutableSet *objectIDs;
 - (MTWeetsType)tweetType
 {
     if (self.urls.count) {
-        for (NSURL *url in self.urls) {
+        for (MTweetURLObject *urlObject in self.urls) {
             // XXX: should implement better URL recognition engine for images
-            NSString *extension = url.pathExtension;
+            NSString *extension = urlObject.url.pathExtension;
             if ([extension isEqualToString:@"jpg"] || [extension isEqualToString:@"jpeg"] || [extension isEqualToString:@"png"]) {
                 return MTWeetsTypeImage;
             }
@@ -77,9 +77,9 @@ static NSMutableSet *objectIDs;
         self.text           = jsonObject[@"text"];
         
         NSMutableArray *urlBuffer = [NSMutableArray array];
-        for (NSDictionary *urlObject in jsonObject[@"entities"][@"urls"]) {
-            NSURL *url = urlObject[@"expanded_url"];
-            [urlBuffer addObject:url];
+        for (NSDictionary *urlDictionary in jsonObject[@"entities"][@"urls"]) {
+            MTweetURLObject *urlObject = [[MTweetURLObject alloc] initWithJSONObject:urlDictionary];
+            [urlBuffer addObject:urlObject];
         }
         self.urls = [NSArray arrayWithArray:urlBuffer];
         

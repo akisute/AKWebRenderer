@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TwitterPicturesViewCell.h"
 
-@interface TwitterPicturesViewImageCell : UICollectionViewCell
+@interface TwitterPicturesViewImageCell : TwitterPicturesViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 

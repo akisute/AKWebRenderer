@@ -34,6 +34,9 @@
 		0E904CD218323AAB00A357D5 /* TwitterPicturesViewTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E904CD118323AAB00A357D5 /* TwitterPicturesViewTextCell.m */; };
 		0E904CD518323ABC00A357D5 /* TwitterPicturesViewWebCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E904CD418323ABC00A357D5 /* TwitterPicturesViewWebCell.m */; };
 		0E904CD818324E6D00A357D5 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E904CD718324E6D00A357D5 /* WebViewController.m */; };
+		0EEBA47018333D09006E7456 /* MTweetURLObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EEBA46F18333D09006E7456 /* MTweetURLObject.m */; };
+		0EEBA47118333D09006E7456 /* MTweetURLObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EEBA46F18333D09006E7456 /* MTweetURLObject.m */; };
+		0EEBA47418336AC2006E7456 /* TwitterPicturesViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EEBA47318336AC2006E7456 /* TwitterPicturesViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +85,10 @@
 		0E904CD418323ABC00A357D5 /* TwitterPicturesViewWebCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwitterPicturesViewWebCell.m; sourceTree = "<group>"; };
 		0E904CD618324E6D00A357D5 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
 		0E904CD718324E6D00A357D5 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
+		0EEBA46E18333D09006E7456 /* MTweetURLObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTweetURLObject.h; sourceTree = "<group>"; };
+		0EEBA46F18333D09006E7456 /* MTweetURLObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTweetURLObject.m; sourceTree = "<group>"; };
+		0EEBA47218336AC2006E7456 /* TwitterPicturesViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterPicturesViewCell.h; sourceTree = "<group>"; };
+		0EEBA47318336AC2006E7456 /* TwitterPicturesViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwitterPicturesViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,6 +159,8 @@
 				0E6437FE1824227A005CE668 /* Main.storyboard */,
 				0E643821182424B2005CE668 /* TwitterPicturesViewController.h */,
 				0E643822182424B2005CE668 /* TwitterPicturesViewController.m */,
+				0EEBA47218336AC2006E7456 /* TwitterPicturesViewCell.h */,
+				0EEBA47318336AC2006E7456 /* TwitterPicturesViewCell.m */,
 				0E127A80182618D700132E1E /* TwitterPicturesViewImageCell.h */,
 				0E127A81182618D700132E1E /* TwitterPicturesViewImageCell.m */,
 				0E904CD318323ABC00A357D5 /* TwitterPicturesViewWebCell.h */,
@@ -166,6 +175,8 @@
 				0E743D831828A1ED0017F3D5 /* TwitterAPIManager.m */,
 				0E743D7E1828A01F0017F3D5 /* MTweets.h */,
 				0E743D7F1828A01F0017F3D5 /* MTweets.m */,
+				0EEBA46E18333D09006E7456 /* MTweetURLObject.h */,
+				0EEBA46F18333D09006E7456 /* MTweetURLObject.m */,
 				0E6438041824227A005CE668 /* Images.xcassets */,
 				0E6437F31824227A005CE668 /* Supporting Files */,
 			);
@@ -299,10 +310,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				0E6437FD1824227A005CE668 /* AppDelegate.m in Sources */,
+				0EEBA47418336AC2006E7456 /* TwitterPicturesViewCell.m in Sources */,
 				0E904CD818324E6D00A357D5 /* WebViewController.m in Sources */,
 				0E743D801828A01F0017F3D5 /* MTweets.m in Sources */,
 				0E904CD218323AAB00A357D5 /* TwitterPicturesViewTextCell.m in Sources */,
 				0E743D841828A1ED0017F3D5 /* TwitterAPIManager.m in Sources */,
+				0EEBA47018333D09006E7456 /* MTweetURLObject.m in Sources */,
 				0E127A82182618D700132E1E /* TwitterPicturesViewImageCell.m in Sources */,
 				0E904CD518323ABC00A357D5 /* TwitterPicturesViewWebCell.m in Sources */,
 				0E6437F91824227A005CE668 /* main.m in Sources */,
@@ -315,6 +328,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0EEBA47118333D09006E7456 /* MTweetURLObject.m in Sources */,
 				0E6438181824227A005CE668 /* TwitterClientTests.m in Sources */,
 				0E743D851828A1ED0017F3D5 /* TwitterAPIManager.m in Sources */,
 				0E743D811828A01F0017F3D5 /* MTweets.m in Sources */,
