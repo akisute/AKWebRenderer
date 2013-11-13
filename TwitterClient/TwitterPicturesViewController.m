@@ -73,7 +73,7 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSArray *allTweets = [MTweets allObjects];
+    NSArray *allTweets = [MTweets allObjectsSortedByDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"tweetID" ascending:NO]]];
     MTweets *tweet = allTweets[indexPath.row];
     if (tweet.retweetedStatus) {
         // TODO: should indicate in UI that this tweet is "retweeted" in some way

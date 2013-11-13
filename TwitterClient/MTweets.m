@@ -56,6 +56,24 @@ static NSMutableSet *objectIDs;
     }
 }
 
++ (NSArray *)allObjectsSortedByComparator:(NSComparator)comparator
+{
+    NSArray *original;
+    @synchronized(objects) {
+        original = [NSArray arrayWithArray:objects];
+    }
+    return [original sortedArrayWithOptions:NSSortConcurrent usingComparator:comparator];
+}
+
++ (NSArray *)allObjectsSortedByDescriptors:(NSArray *)descriptors
+{
+    NSArray *original;
+    @synchronized(objects) {
+        original = [NSArray arrayWithArray:objects];
+    }
+    return [original sortedArrayUsingDescriptors:descriptors];
+}
+
 + (void)insertNewObject:(MTweets *)object
 {
     @synchronized(objects) {

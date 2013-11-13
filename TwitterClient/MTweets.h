@@ -20,6 +20,8 @@ typedef enum MTWeetsType_ {
 
 + (NSInteger)count;
 + (NSArray *)allObjects;
++ (NSArray *)allObjectsSortedByComparator:(NSComparator)comparator;
++ (NSArray *)allObjectsSortedByDescriptors:(NSArray *)descriptors;
 + (void)insertNewObject:(MTweets *)object;
 
 - (id)initWithJSONObject:(NSDictionary *)jsonObject;
