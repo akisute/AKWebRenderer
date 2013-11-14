@@ -15,14 +15,9 @@ static NSMutableSet *objectIDs;
 
 - (MTWeetsType)tweetType
 {
-    if (self.urls.count) {
-        for (MTweetURLObject *urlObject in self.urls) {
-            // XXX: should implement better URL recognition engine for images
-            NSString *extension = urlObject.url.pathExtension;
-            if ([extension isEqualToString:@"jpg"] || [extension isEqualToString:@"jpeg"] || [extension isEqualToString:@"png"]) {
-                return MTWeetsTypeImage;
-            }
-        }
+    if (self.medias.count) {
+        return MTWeetsTypeImage;
+    } else if (self.urls.count) {
         return MTWeetsTypeWeb;
     } else {
         return MTWeetsTypeText;
@@ -97,13 +92,24 @@ static NSMutableSet *objectIDs;
         NSMutableArray *urlBuffer = [NSMutableArray array];
         for (NSDictionary *urlDictionary in jsonObject[@"entities"][@"urls"]) {
             MTweetURLObject *urlObject = [[MTweetURLObject alloc] initWithJSONObject:urlDictionary];
-            [urlBuffer addObject:urlObject];
+            if (urlObject) {
+                [urlBuffer addObject:urlObject];
+            }
         }
         self.urls = [NSArray arrayWithArray:urlBuffer];
         
-        NSDictionary *retweetedStatusObject = jsonObject[@"retweeted_status"];
-        if (retweetedStatusObject) {
-            MTweets *retweetedStatus = [[MTweets alloc] initWithJSONObject:retweetedStatusObject];
+        NSMutableArray *mediaBuffer = [NSMutableArray array];
+        for (NSDictionary *mediaDictionary in jsonObject[@"entities"][@"media"]) {
+            MTweetMediaObject *mediaObject = [[MTweetMediaObject alloc] initWithJSONObject:mediaDictionary];
+            if (mediaObject) {
+                [mediaBuffer addObject:mediaObject];
+            }
+        }
+        self.medias = [NSArray arrayWithArray:mediaBuffer];
+        
+        NSDictionary *retweetedStatusDictionary = jsonObject[@"retweeted_status"];
+        if (retweetedStatusDictionary) {
+            MTweets *retweetedStatus = [[MTweets alloc] initWithJSONObject:retweetedStatusDictionary];
             self.retweetedStatus = retweetedStatus;
         }
     }
