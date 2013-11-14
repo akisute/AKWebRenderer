@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TwitterPicturesViewController : UICollectionViewController
+@interface TwitterPicturesViewController : UIViewController <UICollectionViewDelegate, UICollectionViewDataSource>
+
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
 - (IBAction)refresh:(id)sender;
 - (IBAction)dismissPictureDetailViewController:(UIStoryboardSegue *)segue;
