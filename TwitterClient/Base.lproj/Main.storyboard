@@ -233,7 +233,11 @@
                                 <segue destination="vtv-nT-32h" kind="unwind" unwindAction="dismissWebViewController:" id="8Hl-cL-MKm"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="rd7-7q-bGm"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="rd7-7q-bGm">
+                            <connections>
+                                <action selector="openActionMenu:" destination="in1-6K-PL5" id="HpJ-qD-3lj"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>

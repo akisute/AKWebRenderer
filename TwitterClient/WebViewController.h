@@ -15,4 +15,6 @@
 
 @property (nonatomic) MTweets *tweet;
 
+- (IBAction)openActionMenu:(id)sender;
+
 @end
