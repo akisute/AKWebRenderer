@@ -71,7 +71,9 @@
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
     if (self.callback) {
-        UIView *view = [webView snapshotViewAfterScreenUpdates:NO];
+        // workaround code...
+        //UIView *view = [webView snapshotViewAfterScreenUpdates:NO];
+        UIView *view = [webView resizableSnapshotViewFromRect:CGRectMake(0, 0, 320, 320) afterScreenUpdates:NO withCapInsets:UIEdgeInsetsZero];
         self.callback(view, webView.request.URL);
     }
 }
