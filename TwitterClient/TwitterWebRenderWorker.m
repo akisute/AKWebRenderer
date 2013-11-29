@@ -11,6 +11,7 @@
 @interface TwitterWebRenderWorker () <UIWebViewDelegate>
 @property (nonatomic) UIWindow *window;     // The window which holds web view
 @property (nonatomic) UIWebView *webView;   // The web view to render HTML
+@property (nonatomic) TwitterWebRenderRequest *renderRequest;
 @property (nonatomic, strong) TwitterWebRenderWorkerCompletionHandler callback;
 @end
 
@@ -65,10 +66,10 @@
         return NO;
     }
     
+    self.renderRequest = renderRequest;
     self.callback = [completionHandler copy];
     
-    // TODO: handle render request corretly
-    NSURLRequest *request = [NSURLRequest requestWithURL:renderRequest.url
+    NSURLRequest *request = [NSURLRequest requestWithURL:self.renderRequest.url
                                              cachePolicy:NSURLRequestUseProtocolCachePolicy
                                          timeoutInterval:10.0f];
     [self.webView loadRequest:request];
@@ -78,17 +79,39 @@
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
     if (self.callback) {
-        // workaround code...
-        UIView *view = [webView snapshotViewAfterScreenUpdates:NO];
-        //UIView *view = [webView resizableSnapshotViewFromRect:CGRectMake(0, 0, 320, 320) afterScreenUpdates:NO withCapInsets:UIEdgeInsetsZero];
-        self.callback(view, webView.request.URL);
+        CGRect rect;
+        switch (self.renderRequest.mode) {
+            case TwitterWebRenderRequestModeFullscreen:
+                rect = webView.bounds;
+                break;
+            case TwitterWebRenderRequestModeSquareTopLeft:
+                if (webView.bounds.size.width > webView.bounds.size.height) {
+                    rect = CGRectMake(0, 0, webView.bounds.size.height, webView.bounds.size.height);
+                } else {
+                    rect = CGRectMake(0, 0, webView.bounds.size.width, webView.bounds.size.width);
+                }
+                break;
+            case TwitterWebRenderRequestModeSquareCenter:
+                if (webView.bounds.size.width > webView.bounds.size.height) {
+                    rect = CGRectMake((webView.bounds.size.width-webView.bounds.size.height)/2, 0, webView.bounds.size.height, webView.bounds.size.height);
+                } else {
+                    rect = CGRectMake(0, (webView.bounds.size.height-webView.bounds.size.width)/2, webView.bounds.size.width, webView.bounds.size.width);
+                }
+                break;
+        }
+        UIView *view = [webView resizableSnapshotViewFromRect:rect afterScreenUpdates:NO withCapInsets:UIEdgeInsetsZero];
+        self.callback(view, self.renderRequest.url);
+        //self.renderRequest = nil;
+        //self.callback = nil;
     }
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
     if (self.callback) {
-        self.callback(nil, webView.request.URL);
+        self.callback(nil, self.renderRequest.url);
+        //self.renderRequest = nil;
+        //self.callback = nil;
     }
 }
 

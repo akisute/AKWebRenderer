@@ -75,6 +75,8 @@
      4. When URL requests are finished in render workers, call resizableSnapshotViewFromRect:afterScreenUpdates:withCapInsets: to grab the snapshot, then return it
      
      For current implementation, only 1 render worker is available at a time. Having multiple render workers could result in very complecated code.
+     
+     For current implementation, only portrait mode is available. The UIWebView doesn't handle view rotation itself without any support of UIViewControllers, so we need some solutions to this
      */
     
     // TODO: need a queue system

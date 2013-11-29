@@ -23,7 +23,8 @@
     if (urlObject) {
         self.URLLabel.hidden = NO;
         self.URLLabel.text = urlObject.displayURLString;
-        [[TwitterMediaCache sharedCache] snapshotViewWithURL:urlObject.url completionHandler:^(UIView *view) {
+        [[TwitterMediaCache sharedCache] snapshotViewWithRenderRequest:[TwitterWebRenderRequest renderRequestWithURL:urlObject.url mode:TwitterWebRenderRequestModeSquareTopLeft]
+                                           completionHandler:^(UIView *view) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (view) {
                     self.URLLabel.hidden = YES;
