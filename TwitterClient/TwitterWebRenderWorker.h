@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h> // Requires UIKit and views, might not work in XCTest environment
+#import "TwitterWebRenderRequest.h"
 
 typedef enum TwitterWebRenderWorkerStatus_ {
     TwitterWebRenderWorkerStatusUnknown = 0,
@@ -19,4 +20,5 @@ typedef void (^TwitterWebRenderWorkerCompletionHandler)(UIView *view, NSURL *url
 @interface TwitterWebRenderWorker : NSObject
 @property (nonatomic, readonly) TwitterWebRenderWorkerStatus status;
 - (BOOL)startRenderingWithURL:(NSURL *)url completionHandler:(TwitterWebRenderWorkerCompletionHandler)completionHandler;
+- (BOOL)startRenderingWithRenderRequest:(TwitterWebRenderRequest *)renderRequest completionHandler:(TwitterWebRenderWorkerCompletionHandler)completionHandler;
 @end

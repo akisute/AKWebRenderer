@@ -55,13 +55,20 @@
 
 - (BOOL)startRenderingWithURL:(NSURL *)url completionHandler:(TwitterWebRenderWorkerCompletionHandler)completionHandler
 {
+    return [self startRenderingWithRenderRequest:[TwitterWebRenderRequest renderRequestWithURL:url mode:TwitterWebRenderRequestModeFullscreen]
+                               completionHandler:completionHandler];
+}
+
+- (BOOL)startRenderingWithRenderRequest:(TwitterWebRenderRequest *)renderRequest completionHandler:(TwitterWebRenderWorkerCompletionHandler)completionHandler
+{
     if (self.status != TwitterWebRenderWorkerStatusReady) {
         return NO;
     }
     
     self.callback = [completionHandler copy];
     
-    NSURLRequest *request = [NSURLRequest requestWithURL:url
+    // TODO: handle render request corretly
+    NSURLRequest *request = [NSURLRequest requestWithURL:renderRequest.url
                                              cachePolicy:NSURLRequestUseProtocolCachePolicy
                                          timeoutInterval:10.0f];
     [self.webView loadRequest:request];
@@ -72,8 +79,8 @@
 {
     if (self.callback) {
         // workaround code...
-        //UIView *view = [webView snapshotViewAfterScreenUpdates:NO];
-        UIView *view = [webView resizableSnapshotViewFromRect:CGRectMake(0, 0, 320, 320) afterScreenUpdates:NO withCapInsets:UIEdgeInsetsZero];
+        UIView *view = [webView snapshotViewAfterScreenUpdates:NO];
+        //UIView *view = [webView resizableSnapshotViewFromRect:CGRectMake(0, 0, 320, 320) afterScreenUpdates:NO withCapInsets:UIEdgeInsetsZero];
         self.callback(view, webView.request.URL);
     }
 }

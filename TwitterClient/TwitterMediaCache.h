@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h> // Requires UIKit and views, might not work in XCTest environment
+#import "TwitterWebRenderRequest.h"
 
 typedef void (^TwitterMediaCacheImageCompletionHandler)(UIImage *image);
 typedef void (^TwitterMediaCacheSnapshotViewCompletionHandler)(UIView *view);
@@ -17,5 +18,6 @@ typedef void (^TwitterMediaCacheSnapshotViewCompletionHandler)(UIView *view);
 
 - (BOOL)imageWithURL:(NSURL *)url completionHandler:(TwitterMediaCacheImageCompletionHandler)completionHandler;
 - (BOOL)snapshotViewWithURL:(NSURL *)url completionHandler:(TwitterMediaCacheSnapshotViewCompletionHandler)completionHandler;
+- (BOOL)snapshotViewWithRenderRequest:(TwitterWebRenderRequest *)renderRequest completionHandler:(TwitterMediaCacheSnapshotViewCompletionHandler)completionHandler;
 
 @end

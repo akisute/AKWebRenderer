@@ -61,6 +61,12 @@
 
 - (BOOL)snapshotViewWithURL:(NSURL *)url completionHandler:(TwitterMediaCacheSnapshotViewCompletionHandler)completionHandler
 {
+    return [self snapshotViewWithRenderRequest:[TwitterWebRenderRequest renderRequestWithURL:url mode:TwitterWebRenderRequestModeFullscreen]
+                             completionHandler:completionHandler];
+}
+
+- (BOOL)snapshotViewWithRenderRequest:(TwitterWebRenderRequest *)renderRequest completionHandler:(TwitterMediaCacheSnapshotViewCompletionHandler)completionHandler
+{
     /*
      Strategy:
      1. Place UIWebView instance silently on window, hiding behind any views. They are treated as 'render workers'.
@@ -75,7 +81,7 @@
     // TODO: need a cache system
     
     TwitterMediaCacheSnapshotViewCompletionHandler callback = [completionHandler copy];
-    return [self.webRenderWorker startRenderingWithURL:url completionHandler:^(UIView *view, NSURL *url) {
+    return [self.webRenderWorker startRenderingWithRenderRequest:renderRequest completionHandler:^(UIView *view, NSURL *url) {
         callback(view);
     }];
 }
