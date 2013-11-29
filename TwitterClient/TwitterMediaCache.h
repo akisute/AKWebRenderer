@@ -8,10 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
+typedef void (^TwitterMediaCacheImageCompletionHandler)(UIImage *image);
+typedef void (^TwitterMediaCacheSnapshotViewCompletionHandler)(UIView *view);
+
 @interface TwitterMediaCache : NSObject
 
 + (id)sharedCache;
 
-- (BOOL)imageWithURL:(NSURL *)url completionHandler:(id)completionHandler;
+- (BOOL)imageWithURL:(NSURL *)url completionHandler:(TwitterMediaCacheImageCompletionHandler)completionHandler;
+- (BOOL)snapshotViewWithURL:(NSURL *)url completionHandler:(TwitterMediaCacheSnapshotViewCompletionHandler)completionHandler;
 
 @end
