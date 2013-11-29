@@ -100,9 +100,7 @@
     [[session dataTaskWithRequest:[request preparedURLRequest]
                 completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
                     id jsonObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL];
-                    if (callback) {
-                        callback(jsonObject, response, error);
-                    }
+                    callback(jsonObject, response, error);
                 }] resume];
     
     return YES;

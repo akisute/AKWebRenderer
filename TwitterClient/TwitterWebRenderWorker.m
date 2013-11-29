@@ -11,6 +11,7 @@
 @interface TwitterWebRenderWorker () <UIWebViewDelegate>
 @property (nonatomic) UIWindow *window;     // The window which holds web view
 @property (nonatomic) UIWebView *webView;   // The web view to render HTML
+@property (nonatomic, strong) TwitterWebRenderWorkerCompletionHandler callback;
 @end
 
 @implementation TwitterWebRenderWorker
@@ -42,6 +43,7 @@
         
         // Create a web view and hide it below any views in the window
         self.webView = [[UIWebView alloc] initWithFrame:self.window.bounds];
+        self.webView.backgroundColor = [UIColor redColor]; // for debug purpose
         self.webView.userInteractionEnabled = NO;
         self.webView.hidden = NO;
         self.webView.delegate = self;
@@ -51,11 +53,13 @@
     return self;
 }
 
-- (BOOL)startRenderingWithURL:(NSURL *)url
+- (BOOL)startRenderingWithURL:(NSURL *)url completionHandler:(TwitterWebRenderWorkerCompletionHandler)completionHandler
 {
     if (self.status != TwitterWebRenderWorkerStatusReady) {
         return NO;
     }
+    
+    self.callback = [completionHandler copy];
     
     NSURLRequest *request = [NSURLRequest requestWithURL:url
                                              cachePolicy:NSURLRequestUseProtocolCachePolicy
@@ -66,16 +70,16 @@
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    if ([self.delegate respondsToSelector:@selector(renderWorker:didFinishRenderingSnapshotView:forURL:)]) {
+    if (self.callback) {
         UIView *view = [webView snapshotViewAfterScreenUpdates:NO];
-        [self.delegate renderWorker:self didFinishRenderingSnapshotView:view forURL:webView.request.URL];
+        self.callback(view, webView.request.URL);
     }
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
-    if ([self.delegate respondsToSelector:@selector(renderWorker:didFinishRenderingSnapshotView:forURL:)]) {
-        [self.delegate renderWorker:self didFinishRenderingSnapshotView:nil forURL:webView.request.URL];
+    if (self.callback) {
+        self.callback(nil, webView.request.URL);
     }
 }
 

@@ -70,7 +70,14 @@
      
      For current implementation, only 1 render worker is available at a time. Having multiple render workers could result in very complecated code.
      */
-    return NO;
+    
+    // TODO: need a queue system
+    // TODO: need a cache system
+    
+    TwitterMediaCacheSnapshotViewCompletionHandler callback = [completionHandler copy];
+    return [self.webRenderWorker startRenderingWithURL:url completionHandler:^(UIView *view, NSURL *url) {
+        callback(view);
+    }];
 }
 
 @end

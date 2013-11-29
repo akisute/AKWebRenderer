@@ -14,16 +14,9 @@ typedef enum TwitterWebRenderWorkerStatus_ {
     TwitterWebRenderWorkerStatusExecuting,
 } TwitterWebRenderWorkerStatus;
 
-@class TwitterWebRenderWorker;
-@protocol TwitterWebRenderWorkerDelegate <NSObject>
-@required
-// no required methods
-@optional
-- (void)renderWorker:(TwitterWebRenderWorker *)renderWorker didFinishRenderingSnapshotView:(UIView *)view forURL:(NSURL *)url;
-@end
+typedef void (^TwitterWebRenderWorkerCompletionHandler)(UIView *view, NSURL *url);
 
 @interface TwitterWebRenderWorker : NSObject
 @property (nonatomic, readonly) TwitterWebRenderWorkerStatus status;
-@property (nonatomic, weak) id<TwitterWebRenderWorkerDelegate> delegate;
-- (BOOL)startRenderingWithURL:(NSURL *)url;
+- (BOOL)startRenderingWithURL:(NSURL *)url completionHandler:(TwitterWebRenderWorkerCompletionHandler)completionHandler;
 @end
