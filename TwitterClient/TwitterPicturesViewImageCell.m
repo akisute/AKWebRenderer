@@ -8,12 +8,23 @@
 
 #import "TwitterPicturesViewImageCell.h"
 
+#import "TwitterMediaCache.h"
+
 @implementation TwitterPicturesViewImageCell
 
 - (void)onTweetUpdated
 {
     [super onTweetUpdated];
-    // TODO: Grab Image and put it in
+    MTweetMediaObject *mediaObject = self.tweet.medias.firstObject;
+    if (mediaObject) {
+        [[TwitterMediaCache sharedCache] imageWithURL:mediaObject.mediaURL completionHandler:^(UIImage *image) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.imageView.image = image;
+            });
+        }];
+    } else {
+        self.imageView.image = nil;
+    }
 }
 
 @end
