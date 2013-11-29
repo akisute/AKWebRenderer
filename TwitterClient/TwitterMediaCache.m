@@ -7,9 +7,11 @@
 //
 
 #import "TwitterMediaCache.h"
+#import "TwitterWebRenderWorker.h"
 
 @interface TwitterMediaCache ()
 @property (nonatomic) NSURLSession *session;
+@property (nonatomic) TwitterWebRenderWorker *webRenderWorker;
 @end
 
 @implementation TwitterMediaCache
@@ -36,6 +38,9 @@
         configuration.timeoutIntervalForRequest = 10.0f;
         configuration.timeoutIntervalForResource = 45.0f;
         self.session = [NSURLSession sessionWithConfiguration:configuration];
+        
+        // Setup web render worker
+        self.webRenderWorker = [[TwitterWebRenderWorker alloc] init];
     }
     return self;
 }
@@ -58,13 +63,12 @@
 {
     /*
      Strategy:
-     1. place UIWebView instance silently on window on initialize, hiding behind any views
-     2. ask the UIWebView to request
-     3. when request is finished, use resizableSnapshotViewFromRect:afterScreenUpdates:withCapInsets: to grab the snapshow
-     4. return the snapshot. The view might be resized in completion handler.
+     1. Place UIWebView instance silently on window, hiding behind any views. They are treated as 'render workers'.
+     2. Queue URL requests
+     3. Dequeue URL requests into render workers whenever they are available
+     4. When URL requests are finished in render workers, call resizableSnapshotViewFromRect:afterScreenUpdates:withCapInsets: to grab the snapshot, then return it
      
-     must queue snapshot requests because one 'worker UIWebView' can handle only one requests at a time
-     place several 'worker UIWebView' if performance is not appropriate but it will be very complecated...
+     For current implementation, only 1 render worker is available at a time. Having multiple render workers could result in very complecated code.
      */
     return NO;
 }

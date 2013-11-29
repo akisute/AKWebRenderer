@@ -11,6 +11,8 @@
 		0E127A82182618D700132E1E /* TwitterPicturesViewImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E127A81182618D700132E1E /* TwitterPicturesViewImageCell.m */; };
 		0E257CE41834C2C800040794 /* MTweetMediaObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E257CE31834C2C800040794 /* MTweetMediaObject.m */; };
 		0E257CE51834C2C800040794 /* MTweetMediaObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E257CE31834C2C800040794 /* MTweetMediaObject.m */; };
+		0E374A001848624400035F4D /* TwitterWebRenderWorker.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E3749FF1848624400035F4D /* TwitterWebRenderWorker.m */; };
+		0E374A011848625100035F4D /* TwitterWebRenderWorker.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E3749FF1848624400035F4D /* TwitterWebRenderWorker.m */; };
 		0E6437ED1824227A005CE668 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E6437EC1824227A005CE668 /* Foundation.framework */; };
 		0E6437EF1824227A005CE668 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E6437EE1824227A005CE668 /* CoreGraphics.framework */; };
 		0E6437F11824227A005CE668 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E6437F01824227A005CE668 /* UIKit.framework */; };
@@ -60,6 +62,8 @@
 		0E127A81182618D700132E1E /* TwitterPicturesViewImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwitterPicturesViewImageCell.m; sourceTree = "<group>"; };
 		0E257CE21834C2C800040794 /* MTweetMediaObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTweetMediaObject.h; sourceTree = "<group>"; };
 		0E257CE31834C2C800040794 /* MTweetMediaObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTweetMediaObject.m; sourceTree = "<group>"; };
+		0E3749FE1848624400035F4D /* TwitterWebRenderWorker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterWebRenderWorker.h; sourceTree = "<group>"; };
+		0E3749FF1848624400035F4D /* TwitterWebRenderWorker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwitterWebRenderWorker.m; sourceTree = "<group>"; };
 		0E6437E91824227A005CE668 /* TwitterClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TwitterClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E6437EC1824227A005CE668 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		0E6437EE1824227A005CE668 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -183,6 +187,8 @@
 				0E743D831828A1ED0017F3D5 /* TwitterAPIManager.m */,
 				0EE4A997183A3B3200F446F2 /* TwitterMediaCache.h */,
 				0EE4A998183A3B3200F446F2 /* TwitterMediaCache.m */,
+				0E3749FE1848624400035F4D /* TwitterWebRenderWorker.h */,
+				0E3749FF1848624400035F4D /* TwitterWebRenderWorker.m */,
 				0E743D7E1828A01F0017F3D5 /* MTweets.h */,
 				0E743D7F1828A01F0017F3D5 /* MTweets.m */,
 				0EEBA46E18333D09006E7456 /* MTweetURLObject.h */,
@@ -326,6 +332,7 @@
 				0E904CD818324E6D00A357D5 /* WebViewController.m in Sources */,
 				0E743D801828A01F0017F3D5 /* MTweets.m in Sources */,
 				0E904CD218323AAB00A357D5 /* TwitterPicturesViewTextCell.m in Sources */,
+				0E374A001848624400035F4D /* TwitterWebRenderWorker.m in Sources */,
 				0E743D841828A1ED0017F3D5 /* TwitterAPIManager.m in Sources */,
 				0EEBA47018333D09006E7456 /* MTweetURLObject.m in Sources */,
 				0E127A82182618D700132E1E /* TwitterPicturesViewImageCell.m in Sources */,
@@ -346,6 +353,7 @@
 				0E6438181824227A005CE668 /* TwitterClientTests.m in Sources */,
 				0E743D851828A1ED0017F3D5 /* TwitterAPIManager.m in Sources */,
 				0EE4A99A183A3B3200F446F2 /* TwitterMediaCache.m in Sources */,
+				0E374A011848625100035F4D /* TwitterWebRenderWorker.m in Sources */,
 				0E257CE51834C2C800040794 /* MTweetMediaObject.m in Sources */,
 				0E743D811828A01F0017F3D5 /* MTweets.m in Sources */,
 			);

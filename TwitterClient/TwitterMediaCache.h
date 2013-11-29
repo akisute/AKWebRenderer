@@ -6,7 +6,7 @@
 //  Copyright (c) 2013年 akisute. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h> // Requires UIKit and views, might not work in XCTest environment
 
 typedef void (^TwitterMediaCacheImageCompletionHandler)(UIImage *image);
 typedef void (^TwitterMediaCacheSnapshotViewCompletionHandler)(UIView *view);
