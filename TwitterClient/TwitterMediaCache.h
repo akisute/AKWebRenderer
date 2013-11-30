@@ -17,7 +17,9 @@ typedef void (^TwitterMediaCacheSnapshotViewCompletionHandler)(UIView *view);
 + (id)sharedCache;
 
 - (BOOL)imageWithURL:(NSURL *)url completionHandler:(TwitterMediaCacheImageCompletionHandler)completionHandler;
+
 - (BOOL)snapshotViewWithURL:(NSURL *)url completionHandler:(TwitterMediaCacheSnapshotViewCompletionHandler)completionHandler;
 - (BOOL)snapshotViewWithRenderRequest:(TwitterWebRenderRequest *)renderRequest completionHandler:(TwitterMediaCacheSnapshotViewCompletionHandler)completionHandler;
+- (void)cancelSnapshotViewRequestWithRequestID:(NSString *)requestID;
 
 @end
