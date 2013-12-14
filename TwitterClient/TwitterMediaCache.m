@@ -34,7 +34,8 @@
 @interface TwitterMediaCache ()
 @property (nonatomic) NSURLSession *mediaSession;
 @property (nonatomic) TwitterWebRenderWorker *webRenderWorker;
-@property (nonatomic) NSMutableArray *webRenderRequestQueue;    // must be locked before read/write
+@property (nonatomic) NSMutableArray *webRenderRequestQueue;    // V=TwitterWebRenderRequestItem. Must be locked before read/write.
+@property (nonatomic) NSCache *webSnapshotCache;                // V=UIView, K=TwitterWebRenderRequest.
 @end
 
 @implementation TwitterMediaCache
@@ -66,9 +67,13 @@
         // Setup web render worker and queue
         self.webRenderWorker = [[TwitterWebRenderWorker alloc] init];
         self.webRenderRequestQueue = [NSMutableArray array];
+        self.webSnapshotCache = [[NSCache alloc] init];
+        self.webSnapshotCache.totalCostLimit = 20*1000*1000;
     }
     return self;
 }
+
+#pragma mark - Public
 
 - (BOOL)imageWithURL:(NSURL *)url completionHandler:(TwitterMediaCacheImageCompletionHandler)completionHandler
 {
@@ -99,15 +104,21 @@
      3. Dequeue URL requests into render workers whenever they are available
      4. When URL requests are finished in render workers, call resizableSnapshotViewFromRect:afterScreenUpdates:withCapInsets: to grab the snapshot, then return it
      
-     For current implementation, only 1 render worker is available at a time. Having multiple render workers could result in very complecated code.
+     For current implementation, only 1 render worker is available at a time.
      
      For current implementation, only portrait mode is available. The UIWebView doesn't handle view rotation itself without any support of UIViewControllers, so we need some solutions to this
      */
     
-    // TODO: need a cache system
-    
-    [self __enqueueSnapshotViewRenderRequest:renderRequest completionHandler:completionHandler];
-    [self __popSnapshotViewRenderRequest:NO];
+    UIView *cachedView = [self __cachedSnapshotViewForRenderRequest:renderRequest];
+    if (cachedView) {
+        TwitterMediaCacheSnapshotViewCompletionHandler callback = [completionHandler copy];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            callback(cachedView);
+        });
+    } else {
+        [self __enqueueSnapshotViewRenderRequest:renderRequest completionHandler:completionHandler];
+        [self __popSnapshotViewRenderRequest:NO];
+    }
     return YES;
 }
 
@@ -131,6 +142,8 @@
         }
     }
 }
+
+#pragma mark - Private
 
 - (void)__enqueueSnapshotViewRenderRequest:(TwitterWebRenderRequest *)renderRequest completionHandler:(TwitterMediaCacheSnapshotViewCompletionHandler)completionHandler
 {
@@ -161,13 +174,34 @@
     }
     
     NSLog(@"consuming render request: %@", item.renderRequest.url);
-    [self.webRenderWorker startRenderingWithRenderRequest:item.renderRequest completionHandler:^(UIView *view, NSURL *url) {
-        NSLog(@"render request completed: %@", url);
-        item.callback(view);
+    UIView *cachedView = [self __cachedSnapshotViewForRenderRequest:item.renderRequest];
+    if (cachedView) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            [self __popSnapshotViewRenderRequest:YES];
+            item.callback(cachedView);
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                [self __popSnapshotViewRenderRequest:YES];
+            });
         });
-    }];
+    } else {
+        [self.webRenderWorker startRenderingWithRenderRequest:item.renderRequest completionHandler:^(UIView *view, NSURL *url) {
+            NSLog(@"render request completed: %@", url);
+            [self __storeSnapshotView:view forRenderRequest:item.renderRequest];
+            item.callback(view);
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                [self __popSnapshotViewRenderRequest:YES];
+            });
+        }];
+    }
+}
+
+- (void)__storeSnapshotView:(UIView *)view forRenderRequest:(TwitterWebRenderRequest *)renderRequest
+{
+    [self.webSnapshotCache setObject:view forKey:renderRequest cost:(view.bounds.size.width * view.bounds.size.height * 8)];
+}
+
+- (UIView *)__cachedSnapshotViewForRenderRequest:(TwitterWebRenderRequest *)renderRequest
+{
+    return [self.webSnapshotCache objectForKey:renderRequest];
 }
 
 @end

@@ -18,4 +18,18 @@
     return renderRequest;
 }
 
+- (NSUInteger)hash
+{
+    return [self.url hash] + self.mode;
+}
+
+- (BOOL)isEqual:(id)object
+{
+    if ([object isKindOfClass:[TwitterWebRenderRequest class]]) {
+        TwitterWebRenderRequest *request = object;
+        return [self.url isEqual:request.url] && self.mode == request.mode;
+    }
+    return NO;
+}
+
 @end
