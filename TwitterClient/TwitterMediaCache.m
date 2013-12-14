@@ -109,13 +109,6 @@
     [self __enqueueSnapshotViewRenderRequest:renderRequest completionHandler:completionHandler];
     [self __popSnapshotViewRenderRequest:NO];
     return YES;
-//    TwitterMediaCacheSnapshotViewCompletionHandler callback = [completionHandler copy];
-//    return [self.webRenderWorker startRenderingWithRenderRequest:renderRequest completionHandler:^(UIView *view, NSURL *url) {
-//        callback(view);
-//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//            [self __popSnapshotViewRenderRequest:YES];
-//        });
-//    }];
 }
 
 - (void)cancelSnapshotViewRequestWithRequestID:(NSString *)requestID
