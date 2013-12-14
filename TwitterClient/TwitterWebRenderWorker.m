@@ -15,7 +15,7 @@
 @property (nonatomic) TwitterWebRenderRequest *renderRequest;
 @property (nonatomic, strong) TwitterWebRenderWorkerCompletionHandler callback;
 @property (nonatomic) TwitterWebRenderWorkerStatus status;
-@property (nonatomic) NSUInteger numberOfCurrentLoads;
+@property (nonatomic) NSInteger numberOfCurrentLoads;
 @end
 
 @implementation TwitterWebRenderWorker
