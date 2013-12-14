@@ -9,6 +9,8 @@
 #import "TwitterWebRenderWorker.h"
 
 @interface TwitterWebRenderWorker () <UIWebViewDelegate>
+@property (nonatomic) TwitterWebRenderWorkerStatus status;
+
 @property (nonatomic) UIWindow *window;     // The window which holds web view
 @property (nonatomic) UIWebView *webView;   // The web view to render HTML
 @property (nonatomic) TwitterWebRenderRequest *renderRequest;
@@ -16,14 +18,6 @@
 @end
 
 @implementation TwitterWebRenderWorker
-
-- (TwitterWebRenderWorkerStatus)status
-{
-    if (!self.webView) {
-        return TwitterWebRenderWorkerStatusUnknown;
-    }
-    return (self.webView.loading) ? TwitterWebRenderWorkerStatusExecuting : TwitterWebRenderWorkerStatusReady;
-}
 
 - (id)init
 {
@@ -50,6 +44,8 @@
         self.webView.delegate = self;
         UIView *backmostView = self.window.subviews.firstObject;
         [self.window insertSubview:self.webView belowSubview:backmostView];
+        
+        self.status = TwitterWebRenderWorkerStatusReady;
     }
     return self;
 }
@@ -62,6 +58,11 @@
 
 - (BOOL)startRenderingWithRenderRequest:(TwitterWebRenderRequest *)renderRequest completionHandler:(TwitterWebRenderWorkerCompletionHandler)completionHandler
 {
+    /*
+     Warning:
+     self.status is not thread-safe in this code.
+     This means the state can be completely broken if a render worker is requested from multiple threads.
+     */
     if (self.status != TwitterWebRenderWorkerStatusReady) {
         return NO;
     }
@@ -73,6 +74,16 @@
                                              cachePolicy:NSURLRequestUseProtocolCachePolicy
                                          timeoutInterval:10.0f];
     [self.webView loadRequest:request];
+    self.status = TwitterWebRenderWorkerStatusExecuting;
+    return YES;
+}
+
+- (void)webViewDidStartLoad:(UIWebView *)webView
+{
+}
+
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+{
     return YES;
 }
 
@@ -101,18 +112,22 @@
         }
         UIView *view = [webView resizableSnapshotViewFromRect:rect afterScreenUpdates:NO withCapInsets:UIEdgeInsetsZero];
         self.callback(view, self.renderRequest.url);
-        //self.renderRequest = nil;
-        //self.callback = nil;
     }
+    self.renderRequest = nil;
+    self.callback = nil;
+    [webView stopLoading];
+    self.status = TwitterWebRenderWorkerStatusReady;
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
     if (self.callback) {
         self.callback(nil, self.renderRequest.url);
-        //self.renderRequest = nil;
-        //self.callback = nil;
     }
+    self.renderRequest = nil;
+    self.callback = nil;
+    [webView stopLoading];
+    self.status = TwitterWebRenderWorkerStatusReady;
 }
 
 @end
