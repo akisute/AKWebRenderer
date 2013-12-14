@@ -9,12 +9,13 @@
 #import "TwitterWebRenderWorker.h"
 
 @interface TwitterWebRenderWorker () <UIWebViewDelegate>
-@property (nonatomic) TwitterWebRenderWorkerStatus status;
-
 @property (nonatomic) UIWindow *window;     // The window which holds web view
 @property (nonatomic) UIWebView *webView;   // The web view to render HTML
+
 @property (nonatomic) TwitterWebRenderRequest *renderRequest;
 @property (nonatomic, strong) TwitterWebRenderWorkerCompletionHandler callback;
+@property (nonatomic) TwitterWebRenderWorkerStatus status;
+@property (nonatomic) NSUInteger numberOfCurrentLoads;
 @end
 
 @implementation TwitterWebRenderWorker
@@ -46,9 +47,54 @@
         [self.window insertSubview:self.webView belowSubview:backmostView];
         
         self.status = TwitterWebRenderWorkerStatusReady;
+        self.numberOfCurrentLoads = 0;
     }
     return self;
 }
+
+#pragma mark - Private
+
+- (void)finishRenderingIfPossible
+{
+    if (self.numberOfCurrentLoads > 0) {
+        NSLog(@"  waiting for current loads");
+        return;
+    }
+    NSLog(@"  finishing");
+    
+    if (self.callback) {
+        CGRect rect;
+        switch (self.renderRequest.mode) {
+            case TwitterWebRenderRequestModeFullscreen:
+                rect = self.webView.bounds;
+                break;
+            case TwitterWebRenderRequestModeSquareTopLeft:
+                if (self.webView.bounds.size.width > self.webView.bounds.size.height) {
+                    rect = CGRectMake(0, 0, self.webView.bounds.size.height, self.webView.bounds.size.height);
+                } else {
+                    rect = CGRectMake(0, 0, self.webView.bounds.size.width, self.webView.bounds.size.width);
+                }
+                break;
+            case TwitterWebRenderRequestModeSquareCenter:
+                if (self.webView.bounds.size.width > self.webView.bounds.size.height) {
+                    rect = CGRectMake((self.webView.bounds.size.width-self.webView.bounds.size.height)/2, 0, self.webView.bounds.size.height, self.webView.bounds.size.height);
+                } else {
+                    rect = CGRectMake(0, (self.webView.bounds.size.height-self.webView.bounds.size.width)/2, self.webView.bounds.size.width, self.webView.bounds.size.width);
+                }
+                break;
+        }
+        UIView *view = [self.webView resizableSnapshotViewFromRect:rect afterScreenUpdates:NO withCapInsets:UIEdgeInsetsZero];
+        self.callback(view, self.renderRequest.url);
+    }
+    
+    [NSObject cancelPreviousPerformRequestsWithTarget:self];
+    self.numberOfCurrentLoads = 0;
+    self.renderRequest = nil;
+    self.callback = nil;
+    self.status = TwitterWebRenderWorkerStatusReady;
+}
+
+#pragma mark - Public
 
 - (BOOL)startRenderingWithURL:(NSURL *)url completionHandler:(TwitterWebRenderWorkerCompletionHandler)completionHandler
 {
@@ -78,8 +124,12 @@
     return YES;
 }
 
+#pragma mark - UIWebViewDelegate
+
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
+    self.numberOfCurrentLoads = self.numberOfCurrentLoads + 1;
+    NSLog(@"  loading count = %lu", self.numberOfCurrentLoads);
 }
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
@@ -89,45 +139,18 @@
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    if (self.callback) {
-        CGRect rect;
-        switch (self.renderRequest.mode) {
-            case TwitterWebRenderRequestModeFullscreen:
-                rect = webView.bounds;
-                break;
-            case TwitterWebRenderRequestModeSquareTopLeft:
-                if (webView.bounds.size.width > webView.bounds.size.height) {
-                    rect = CGRectMake(0, 0, webView.bounds.size.height, webView.bounds.size.height);
-                } else {
-                    rect = CGRectMake(0, 0, webView.bounds.size.width, webView.bounds.size.width);
-                }
-                break;
-            case TwitterWebRenderRequestModeSquareCenter:
-                if (webView.bounds.size.width > webView.bounds.size.height) {
-                    rect = CGRectMake((webView.bounds.size.width-webView.bounds.size.height)/2, 0, webView.bounds.size.height, webView.bounds.size.height);
-                } else {
-                    rect = CGRectMake(0, (webView.bounds.size.height-webView.bounds.size.width)/2, webView.bounds.size.width, webView.bounds.size.width);
-                }
-                break;
-        }
-        UIView *view = [webView resizableSnapshotViewFromRect:rect afterScreenUpdates:NO withCapInsets:UIEdgeInsetsZero];
-        self.callback(view, self.renderRequest.url);
-    }
-    self.renderRequest = nil;
-    self.callback = nil;
-    [webView stopLoading];
-    self.status = TwitterWebRenderWorkerStatusReady;
+    self.numberOfCurrentLoads = self.numberOfCurrentLoads - 1;
+    NSLog(@"  loading count = %lu", self.numberOfCurrentLoads);
+    
+    [self performSelector:@selector(finishRenderingIfPossible) withObject:nil afterDelay:0.05 inModes:@[NSRunLoopCommonModes]];
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
-    if (self.callback) {
-        self.callback(nil, self.renderRequest.url);
-    }
-    self.renderRequest = nil;
-    self.callback = nil;
-    [webView stopLoading];
-    self.status = TwitterWebRenderWorkerStatusReady;
+    self.numberOfCurrentLoads = self.numberOfCurrentLoads - 1;
+    NSLog(@"  loading count = %lu", self.numberOfCurrentLoads);
+    
+    [self performSelector:@selector(finishRenderingIfPossible) withObject:nil afterDelay:0.05 inModes:@[NSRunLoopCommonModes]];
 }
 
 @end
