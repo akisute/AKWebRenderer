@@ -201,7 +201,28 @@
 
 - (UIView *)__cachedSnapshotViewForRenderRequest:(TwitterWebRenderRequest *)renderRequest
 {
-    return [self.webSnapshotCache objectForKey:renderRequest];
+    UIView *cachedView = [self.webSnapshotCache objectForKey:renderRequest];
+    if (cachedView) {
+        CALayer *layer = cachedView.layer;
+        while (layer.sublayers.count > 0) {
+            layer = layer.sublayers.firstObject;
+        }
+        UIView *copyView = [[UIView alloc] initWithFrame:cachedView.frame];
+        copyView.contentMode = UIViewContentModeScaleToFill;
+        copyView.contentScaleFactor = cachedView.contentScaleFactor;
+        copyView.layer.contents = layer.contents;
+        copyView.layer.contentsRect = layer.contentsRect;
+        copyView.layer.contentsScale = layer.contentsScale;
+        copyView.layer.rasterizationScale = layer.rasterizationScale;
+        
+        UIView *containerView = [[UIView alloc] initWithFrame:cachedView.frame];
+        containerView.contentMode = UIViewContentModeCenter;
+        containerView.contentScaleFactor = 1.0f;
+        [containerView addSubview:copyView];
+        return containerView;
+    } else {
+        return nil;
+    }
 }
 
 @end
