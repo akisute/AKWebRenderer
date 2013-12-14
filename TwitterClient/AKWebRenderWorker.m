@@ -1,24 +1,24 @@
 //
-//  TwitterWebRenderWorker.m
+//  AKWebRenderWorker.m
 //  TwitterClient
 //
 //  Created by 小野 将司 on 2013/11/29.
 //  Copyright (c) 2013年 akisute. All rights reserved.
 //
 
-#import "TwitterWebRenderWorker.h"
+#import "AKWebRenderWorker.h"
 
-@interface TwitterWebRenderWorker () <UIWebViewDelegate>
+@interface AKWebRenderWorker () <UIWebViewDelegate>
 @property (nonatomic) UIWindow *window;     // The window which holds web view
 @property (nonatomic) UIWebView *webView;   // The web view to render HTML
 
-@property (nonatomic) TwitterWebRenderRequest *renderRequest;
-@property (nonatomic, strong) TwitterWebRenderWorkerCompletionHandler callback;
-@property (nonatomic) TwitterWebRenderWorkerStatus status;
+@property (nonatomic) AKWebRenderRequest *renderRequest;
+@property (nonatomic, strong) AKWebRenderWorkerCompletionHandler callback;
+@property (nonatomic) AKWebRenderWorkerStatus status;
 @property (nonatomic) NSInteger numberOfCurrentLoads;
 @end
 
-@implementation TwitterWebRenderWorker
+@implementation AKWebRenderWorker
 
 - (id)init
 {
@@ -46,7 +46,7 @@
         UIView *backmostView = self.window.subviews.firstObject;
         [self.window insertSubview:self.webView belowSubview:backmostView];
         
-        self.status = TwitterWebRenderWorkerStatusReady;
+        self.status = AKWebRenderWorkerStatusReady;
         self.numberOfCurrentLoads = 0;
     }
     return self;
@@ -65,17 +65,17 @@
     if (self.callback) {
         CGRect rect;
         switch (self.renderRequest.mode) {
-            case TwitterWebRenderRequestModeFullscreen:
+            case AKWebRenderRequestModeFullscreen:
                 rect = self.webView.bounds;
                 break;
-            case TwitterWebRenderRequestModeSquareTopLeft:
+            case AKWebRenderRequestModeSquareTopLeft:
                 if (self.webView.bounds.size.width > self.webView.bounds.size.height) {
                     rect = CGRectMake(0, 0, self.webView.bounds.size.height, self.webView.bounds.size.height);
                 } else {
                     rect = CGRectMake(0, 0, self.webView.bounds.size.width, self.webView.bounds.size.width);
                 }
                 break;
-            case TwitterWebRenderRequestModeSquareCenter:
+            case AKWebRenderRequestModeSquareCenter:
                 if (self.webView.bounds.size.width > self.webView.bounds.size.height) {
                     rect = CGRectMake((self.webView.bounds.size.width-self.webView.bounds.size.height)/2, 0, self.webView.bounds.size.height, self.webView.bounds.size.height);
                 } else {
@@ -91,25 +91,25 @@
     self.numberOfCurrentLoads = 0;
     self.renderRequest = nil;
     self.callback = nil;
-    self.status = TwitterWebRenderWorkerStatusReady;
+    self.status = AKWebRenderWorkerStatusReady;
 }
 
 #pragma mark - Public
 
-- (BOOL)startRenderingWithURL:(NSURL *)url completionHandler:(TwitterWebRenderWorkerCompletionHandler)completionHandler
+- (BOOL)startRenderingWithURL:(NSURL *)url completionHandler:(AKWebRenderWorkerCompletionHandler)completionHandler
 {
-    return [self startRenderingWithRenderRequest:[TwitterWebRenderRequest renderRequestWithURL:url mode:TwitterWebRenderRequestModeFullscreen]
+    return [self startRenderingWithRenderRequest:[AKWebRenderRequest renderRequestWithURL:url mode:AKWebRenderRequestModeFullscreen]
                                completionHandler:completionHandler];
 }
 
-- (BOOL)startRenderingWithRenderRequest:(TwitterWebRenderRequest *)renderRequest completionHandler:(TwitterWebRenderWorkerCompletionHandler)completionHandler
+- (BOOL)startRenderingWithRenderRequest:(AKWebRenderRequest *)renderRequest completionHandler:(AKWebRenderWorkerCompletionHandler)completionHandler
 {
     /*
      Warning:
      self.status is not thread-safe in this code.
      This means the state can be completely broken if a render worker is requested from multiple threads.
      */
-    if (self.status != TwitterWebRenderWorkerStatusReady) {
+    if (self.status != AKWebRenderWorkerStatusReady) {
         return NO;
     }
     
@@ -120,7 +120,7 @@
                                              cachePolicy:NSURLRequestUseProtocolCachePolicy
                                          timeoutInterval:10.0f];
     [self.webView loadRequest:request];
-    self.status = TwitterWebRenderWorkerStatusExecuting;
+    self.status = AKWebRenderWorkerStatusExecuting;
     return YES;
 }
 

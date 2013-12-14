@@ -8,7 +8,7 @@
 
 #import "TwitterPicturesViewImageCell.h"
 
-#import "TwitterMediaCache.h"
+#import "AKMediaCache.h"
 
 @implementation TwitterPicturesViewImageCell
 
@@ -17,7 +17,7 @@
     [super onTweetUpdated];
     MTweetMediaObject *mediaObject = self.tweet.medias.firstObject;
     if (mediaObject) {
-        [[TwitterMediaCache sharedCache] imageWithURL:mediaObject.mediaURL completionHandler:^(UIImage *image) {
+        [[AKMediaCache sharedCache] imageWithURL:mediaObject.mediaURL completionHandler:^(UIImage *image) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.imageView.image = image;
             });

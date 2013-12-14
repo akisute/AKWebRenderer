@@ -1,24 +1,24 @@
 //
-//  TwitterMediaCache.m
+//  AKMediaCache.m
 //  TwitterClient
 //
 //  Created by 小野 将司 on 2013/11/18.
 //  Copyright (c) 2013年 akisute. All rights reserved.
 //
 
-#import "TwitterMediaCache.h"
-#import "TwitterWebRenderWorker.h"
+#import "AKMediaCache.h"
+#import "AKWebRenderWorker.h"
 
-@interface TwitterWebRenderRequestItem : NSObject
+@interface AKWebRenderRequestItem : NSObject
 @property (nonatomic, copy) NSString *requestID;                                        // should be read-only
-@property (nonatomic, strong) TwitterWebRenderRequest *renderRequest;                   // should be read-only
-@property (nonatomic, strong) TwitterMediaCacheSnapshotViewCompletionHandler callback;  // should be read-only. Stores copied block (Heap Block), not Stack Block
-+ (TwitterWebRenderRequestItem *)infoWithRenderRequest:(TwitterWebRenderRequest *)renderRequest completionHandler:(TwitterMediaCacheSnapshotViewCompletionHandler)completionHandler;
+@property (nonatomic, strong) AKWebRenderRequest *renderRequest;                   // should be read-only
+@property (nonatomic, strong) AKMediaCacheSnapshotViewCompletionHandler callback;  // should be read-only. Stores copied block (Heap Block), not Stack Block
++ (AKWebRenderRequestItem *)infoWithRenderRequest:(AKWebRenderRequest *)renderRequest completionHandler:(AKMediaCacheSnapshotViewCompletionHandler)completionHandler;
 @end
-@implementation TwitterWebRenderRequestItem
-+ (TwitterWebRenderRequestItem *)infoWithRenderRequest:(TwitterWebRenderRequest *)renderRequest completionHandler:(TwitterMediaCacheSnapshotViewCompletionHandler)completionHandler
+@implementation AKWebRenderRequestItem
++ (AKWebRenderRequestItem *)infoWithRenderRequest:(AKWebRenderRequest *)renderRequest completionHandler:(AKMediaCacheSnapshotViewCompletionHandler)completionHandler
 {
-    TwitterWebRenderRequestItem *item = [[TwitterWebRenderRequestItem alloc] init];
+    AKWebRenderRequestItem *item = [[AKWebRenderRequestItem alloc] init];
     item.renderRequest = renderRequest;
     item.callback = [completionHandler copy];
     
@@ -31,21 +31,21 @@
 
 #pragma mark -
 
-@interface TwitterMediaCache ()
+@interface AKMediaCache ()
 @property (nonatomic) NSURLSession *mediaSession;
-@property (nonatomic) TwitterWebRenderWorker *webRenderWorker;
-@property (nonatomic) NSMutableArray *webRenderRequestQueue;    // V=TwitterWebRenderRequestItem. Must be locked before read/write.
-@property (nonatomic) NSCache *webSnapshotCache;                // V=UIView, K=TwitterWebRenderRequest.
+@property (nonatomic) AKWebRenderWorker *webRenderWorker;
+@property (nonatomic) NSMutableArray *webRenderRequestQueue;    // V=AKWebRenderRequestItem. Must be locked before read/write.
+@property (nonatomic) NSCache *webSnapshotCache;                // V=UIView, K=AKWebRenderRequest.
 @end
 
-@implementation TwitterMediaCache
+@implementation AKMediaCache
 
 + (id)sharedCache
 {
-    static TwitterMediaCache* sharedCache;
+    static AKMediaCache* sharedCache;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        sharedCache = [[TwitterMediaCache alloc] init];
+        sharedCache = [[AKMediaCache alloc] init];
     });
     return sharedCache;
 }
@@ -65,7 +65,7 @@
         self.mediaSession = [NSURLSession sessionWithConfiguration:configuration];
         
         // Setup web render worker and queue
-        self.webRenderWorker = [[TwitterWebRenderWorker alloc] init];
+        self.webRenderWorker = [[AKWebRenderWorker alloc] init];
         self.webRenderRequestQueue = [NSMutableArray array];
         self.webSnapshotCache = [[NSCache alloc] init];
         self.webSnapshotCache.totalCostLimit = 20*1000*1000;
@@ -75,9 +75,9 @@
 
 #pragma mark - Public
 
-- (BOOL)imageWithURL:(NSURL *)url completionHandler:(TwitterMediaCacheImageCompletionHandler)completionHandler
+- (BOOL)imageWithURL:(NSURL *)url completionHandler:(AKMediaCacheImageCompletionHandler)completionHandler
 {
-    TwitterMediaCacheImageCompletionHandler callback = [completionHandler copy];
+    AKMediaCacheImageCompletionHandler callback = [completionHandler copy];
     [[self.mediaSession dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (error) {
             callback(nil);
@@ -89,13 +89,13 @@
     return YES;
 }
 
-- (BOOL)snapshotViewWithURL:(NSURL *)url completionHandler:(TwitterMediaCacheSnapshotViewCompletionHandler)completionHandler
+- (BOOL)snapshotViewWithURL:(NSURL *)url completionHandler:(AKMediaCacheSnapshotViewCompletionHandler)completionHandler
 {
-    return [self snapshotViewWithRenderRequest:[TwitterWebRenderRequest renderRequestWithURL:url mode:TwitterWebRenderRequestModeFullscreen]
+    return [self snapshotViewWithRenderRequest:[AKWebRenderRequest renderRequestWithURL:url mode:AKWebRenderRequestModeFullscreen]
                              completionHandler:completionHandler];
 }
 
-- (BOOL)snapshotViewWithRenderRequest:(TwitterWebRenderRequest *)renderRequest completionHandler:(TwitterMediaCacheSnapshotViewCompletionHandler)completionHandler
+- (BOOL)snapshotViewWithRenderRequest:(AKWebRenderRequest *)renderRequest completionHandler:(AKMediaCacheSnapshotViewCompletionHandler)completionHandler
 {
     /*
      Strategy:
@@ -111,7 +111,7 @@
     
     UIView *cachedView = [self __cachedSnapshotViewForRenderRequest:renderRequest];
     if (cachedView) {
-        TwitterMediaCacheSnapshotViewCompletionHandler callback = [completionHandler copy];
+        AKMediaCacheSnapshotViewCompletionHandler callback = [completionHandler copy];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             callback(cachedView);
         });
@@ -130,8 +130,8 @@
      (ID/worker table should be managed by this class. Do not add ID property on render worker)
      */
     @synchronized(_webRenderRequestQueue) {
-        TwitterWebRenderRequestItem *itemToRemove = nil;
-        for (TwitterWebRenderRequestItem *item in self.webRenderRequestQueue) {
+        AKWebRenderRequestItem *itemToRemove = nil;
+        for (AKWebRenderRequestItem *item in self.webRenderRequestQueue) {
             if ([item.requestID isEqualToString:requestID]) {
                 itemToRemove = item;
                 break;
@@ -145,10 +145,10 @@
 
 #pragma mark - Private
 
-- (void)__enqueueSnapshotViewRenderRequest:(TwitterWebRenderRequest *)renderRequest completionHandler:(TwitterMediaCacheSnapshotViewCompletionHandler)completionHandler
+- (void)__enqueueSnapshotViewRenderRequest:(AKWebRenderRequest *)renderRequest completionHandler:(AKMediaCacheSnapshotViewCompletionHandler)completionHandler
 {
     NSLog(@"enqueueing render request: %@", renderRequest.url);
-    TwitterWebRenderRequestItem *item = [TwitterWebRenderRequestItem infoWithRenderRequest:renderRequest completionHandler:completionHandler];
+    AKWebRenderRequestItem *item = [AKWebRenderRequestItem infoWithRenderRequest:renderRequest completionHandler:completionHandler];
     @synchronized(_webRenderRequestQueue) {
         [self.webRenderRequestQueue addObject:item];
     }
@@ -156,12 +156,12 @@
 
 - (void)__popSnapshotViewRenderRequest:(BOOL)force
 {
-    if (!force && self.webRenderWorker.status != TwitterWebRenderWorkerStatusReady) {
+    if (!force && self.webRenderWorker.status != AKWebRenderWorkerStatusReady) {
         NSLog(@"ignoring pop: render worker not available right now");
         return;
     }
     
-    TwitterWebRenderRequestItem *item = nil;
+    AKWebRenderRequestItem *item = nil;
     @synchronized(_webRenderRequestQueue) {
         if (self.webRenderRequestQueue.count > 0) {
             item = self.webRenderRequestQueue.firstObject;
@@ -194,12 +194,12 @@
     }
 }
 
-- (void)__storeSnapshotView:(UIView *)view forRenderRequest:(TwitterWebRenderRequest *)renderRequest
+- (void)__storeSnapshotView:(UIView *)view forRenderRequest:(AKWebRenderRequest *)renderRequest
 {
     [self.webSnapshotCache setObject:view forKey:renderRequest cost:(view.bounds.size.width * view.bounds.size.height * 8)];
 }
 
-- (UIView *)__cachedSnapshotViewForRenderRequest:(TwitterWebRenderRequest *)renderRequest
+- (UIView *)__cachedSnapshotViewForRenderRequest:(AKWebRenderRequest *)renderRequest
 {
     UIView *cachedView = [self.webSnapshotCache objectForKey:renderRequest];
     if (cachedView) {
