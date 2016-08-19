@@ -19,7 +19,7 @@ Just include following files to your project:
 - AKWebRenderWorker.m
 - AKWebRenderRequest.h
 - AKWebRenderRequest.m
-- 
+
 ## About example project
 
 The example project `TwitterClient` renders timeline tweets of the first Twitter account available through `Social.framework`. You need to add a Twitter account from `Settings -> Twitter` to run this example. After adding an account, you'll see 3 different kinds of tweets in UICollectionView, which are:
