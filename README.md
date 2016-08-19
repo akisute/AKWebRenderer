@@ -63,7 +63,7 @@ Views returned from `- (UIView *)resizableSnapshotViewFromRect:(CGRect)rect...` 
 <_UIReplicantLayer:0x13d921ab0; position = CGPoint (72 72); bounds = CGRect (0 0; 144 144); delegate = <_UIReplicantContentView: 0x13d922410; frame = (0 0; 144 144); layer = <_UIReplicantLayer: 0x13d921ab0>>; contents = <CASlotProxy: 0x13c70a800>; opaque = YES; allowsGroupOpacity = YES; rasterizationScale = 2; contentsScale = 2>
 ```
 
-`CASlotProxy` is seemed to be an subclass of `NSProxy`. If it were an subclass of `NSData` or `UIImage` or anything like that we can simply render it into `CGContext` using Core Graphics functions, but it isn't. That's why I had to workaround this by creating a copy of view which shares `CASlotProxy` backing store with the original snapshot view. However, this workaround is no longer working in iOS 9 or later (confirmed on device, iOS 9.3.4/iPhone 6s).
+`CASlotProxy` is seemed to be an subclass of `NSProxy`. If it were an subclass of `NSData` or `UIImage` or anything like that we can simply render it into `CGContext` using Core Graphics functions, but it isn't. That's why I had to workaround this by creating a copy of view which shares `CASlotProxy` backing store with the original snapshot view in `AKMediaCache.__storeSnapshotView(:forRenderRequest:)`. However, this workaround is no longer working in iOS 9 or later (confirmed on device, iOS 9.3.4/iPhone 6s).
 
 ## TODO
 
